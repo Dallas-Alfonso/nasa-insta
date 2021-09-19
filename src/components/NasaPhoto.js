@@ -1,76 +1,88 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import NavBar from './NavBar';
+import firebase from 'firebase/compat';
 
 
 const apiKey = process.env.REACT_APP_NASA_KEY;
 
 export default function NasaPhoto() {
-    const [photoData, setPhotoData] = useState(null);
 
-    // // hooks for Likes and Dislikes
-    // const [likes, setlikes] = useState(0);
-    // const [dislikes, setDislikes] = useState(0);
+    const [title, setTitle] = useState("");
+    
+    // hooks for Likes and Dislikes
+    const [likes, setlikes] = useState(0);
+    const [dislikes, setDislikes] = useState(0);
     // const [movieData, setMovieData] = useState ({}); //ADJUST THIS to pick up NASA DATA
-    // // hooks for Likes and Dislikes
+    // hooks for Likes and Dislikes
+
+    const [photoData, setPhotoData] = useState(null);
 
     useEffect(() => {
         fetchPhoto();
 
+        
         async function fetchPhoto(){
+            
             const res = await fetch(
                 `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
             );
             const data = await res.json();
 
             setPhotoData(data);
+            setTitle(data.title)
             console.log(data)
+            console.log(data.title)
         }
     }, []);
 
-    if (!photoData) return <div/>
+    // JS for creating entires in databse, the like  and the dislike 
+    useEffect(() => {
+        if (!title) return null;
+        console.log(title)
+        // retrieve likes/dislikes from Firebase and set data
+		// ELSE set a new entry in Firebase with movieID and set data
+        const movieRef = firebase.database().ref (`${title}/`);
+        console.log(title)
+        movieRef.on("value", (data) => {
+            console.log(data)
+            if (data.val() !== null ) {
+                setPhotoData({
+                    ...data.val(),
+                });
+            } else {
+                firebase.database().ref(`${title}/`).set({
+                    likes: 0,
+                    dislikes: 0,
+                });
+            }
+        })
+    }, [title]);
 
-    // // JS for creating entires in databse, the like  and the dislike 
-    // useEffect(() => {
-    //     if (!url) return null;
-    //     // retrieve likes/dislikes from Firebase and set data
-	// 	// ELSE set a new entry in Firebase with movieID and set data
-    //     const movieRef = firebase.database().ref (`${url}/`);
-    //     movieRef.on("value", (data) => {
-    //         if (data.val() !== null ) {
-    //             setMovieData({
-    //                 ...data.val(),
-    //             });
-    //         } else {
-    //             firebase.database().ref(`${url}/`).set({
-    //                 likes: 0,
-    //                 dislikes: 0,
-    //             });
-    //         }
-    //     })
-    // }, [url]);
+    useEffect(() => {
+        if (!photoData) return null;
+        const { dislikes: down, likes: up } = photoData;
 
-    // useEffect(() => {
-    //     if (!movieData) return null;
-    //     const { dislikes: down, likes: up } = movieData;
+        setDislikes(down);
+        setlikes(up);
+    }, [dislikes, likes, photoData])
 
-    //     setDislikes(down);
-    //     setlikes(up);
-    // }, [dislikes, likes, movieData])
+    // called last to NOT call Hooks Conditionally
+    if (!photoData) return <div />
 
-    // const handleLikeClick = () => {
-    //     const updates = {};
-    //     updates[`${url}/likes`] = firebase.database.ServerValue.increment(1);
-    //     firebase.database().ref().update(updates);
-    // }
+    const handleLikeClick = () => {
+        const updates = {};
+        updates[`${title}/likes`] = firebase.database.ServerValue.increment(1);
+        firebase.database().ref().update(updates);
+    }
 
-    // const handleDislikeClick = (e) => {
-    //     const updates = {};
-    //     updates[`${url}/dislikes`] = firebase.database.ServerValue.increment(1);
-    //     firebase.database().ref().update(updates)
-    // }
+    const handleDislikeClick = (e) => {
+        const updates = {};
+        updates[`${title}/dislikes`] = firebase.database.ServerValue.increment(1);
+        firebase.database().ref().update(updates)
+    }
 
-    // // JS for creating entires in databse, the like  and the dislike 
+    // JS for creating entires in databse, the like  and the dislike 
 
 
     return (
@@ -88,12 +100,14 @@ export default function NasaPhoto() {
                 title="space-video"
                 src={photoData.url}
                 frameBorder="0"
-                gesture="media"
-                allow="encryted-media"
+                // gesture="media"
+                // allow="encryted-media"
+                allow= "autoplay"
                 allowFullScreen
                 className="photo"
                 />
             )
+            
             }
 
             <div>
@@ -102,14 +116,14 @@ export default function NasaPhoto() {
                 <p className="explanation">{photoData.explanation}</p>
             </div>
 
-            {/* <div>
-                <button onClick={() => handleLikeClick(imdbID)}>
+            <div>
+                <button className='counter' onClick={() => handleLikeClick(title)}>
                 👍{likes}
                 </button>
-                <button onClick={() => handleDislikeClick(imbdID)}>
+                <button className='counter' onClick={() => handleDislikeClick(title)}>
                 👎{dislikes}
                 </button>
-            </div> */}
+            </div>
 
         </div>
         </>
