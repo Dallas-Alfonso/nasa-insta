@@ -91,6 +91,9 @@ export default function NasaPhoto() {
         <NavBar/>
         <div className="nasa-photo">
 
+            <h1>Nasa-Insta</h1>
+            <p>Brought to you by NASA's Astronomy Photo of The Day</p>
+
             {/* Ternary here to alter what is reflected if .media_type is video */}
 
             {
