@@ -18,34 +18,16 @@ export default function NasaPhoto() {
 
     const [photoData, setPhotoData] = useState(null);
 
-    useEffect(() => {
-        fetchPhoto();
-
-        
-        async function fetchPhoto(){
-            
-            const res = await fetch(
-                `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
-            );
-            const data = await res.json();
-
-            setPhotoData(data);
-            setTitle(data.title)
-            console.log(data)
-            console.log(data.title)
-        }
-    }, []);
-
     // JS for creating entires in databse, the like  and the dislike 
     useEffect(() => {
         if (!title) return null;
-        console.log(title)
+        
         // retrieve likes/dislikes from Firebase and set data
 		// ELSE set a new entry in Firebase with movieID and set data
         const movieRef = firebase.database().ref (`${title}/`);
-        console.log(title)
+        
         movieRef.on("value", (data) => {
-            console.log(data)
+            
             if (data.val() !== null ) {
                 setPhotoData({
                     ...data.val(),
@@ -56,16 +38,36 @@ export default function NasaPhoto() {
                     dislikes: 0,
                 });
             }
+            
         })
+    }, [title]);
+
+    useEffect(() => {
+        fetchPhoto();
+
+        async function fetchPhoto(){
+            
+            const res = await fetch(
+                `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
+            );
+            const data = await res.json();
+
+            setPhotoData(data);
+            setTitle(data.title)
+            console.log(photoData)
+        }
     }, [title]);
 
     useEffect(() => {
         if (!photoData) return null;
         const { dislikes: down, likes: up } = photoData;
-
+        console.log(photoData)
         setDislikes(down);
         setlikes(up);
+        
     }, [dislikes, likes, photoData])
+
+    
 
     // called last to NOT call Hooks Conditionally
     if (!photoData) return <div />
@@ -81,7 +83,6 @@ export default function NasaPhoto() {
         updates[`${title}/dislikes`] = firebase.database.ServerValue.increment(1);
         firebase.database().ref().update(updates)
     }
-
     // JS for creating entires in databse, the like  and the dislike 
 
 
@@ -110,20 +111,22 @@ export default function NasaPhoto() {
             
             }
 
-            <div>
+            <div className="context">
                 <h1>{photoData.title}</h1>
                 <p className="date">{photoData.date}</p>
                 <p className="explanation">{photoData.explanation}</p>
+
+                <div>
+                <button className="counter" onClick={() => handleLikeClick(title)}>
+                Like{likes}
+                </button>
+                <button className="counter" onClick={() => handleDislikeClick(title)}>
+                Dislike{dislikes}
+                </button>
+            </div>
             </div>
 
-            <div>
-                <button className='counter' onClick={() => handleLikeClick(title)}>
-                👍{likes}
-                </button>
-                <button className='counter' onClick={() => handleDislikeClick(title)}>
-                👎{dislikes}
-                </button>
-            </div>
+            
 
         </div>
         </>

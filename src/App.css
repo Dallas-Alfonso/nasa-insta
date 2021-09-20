@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
 body {
-  font-family: 'Righteous', cursive;
-  color: #d14f4f;
+  /* font-family: 'Righteous', cursive; */
+  font-family: 'Poppins', sans-serif;
+  /* color: #d14f4f; */
   line-height: 1.7;
   font-size: 19px;
   background-color: #222222;
@@ -35,14 +36,17 @@ body {
 
 .nasa-photo {
   display: flex;
-  padding: 40px;
+  padding: 50px 17px 50px;
   margin: 0 auto;
   max-height: 100%;
+  flex-direction: column;
+  width:27em;
+  background-color: #dadada;
 }
 
 .nasa-photo img {
-  width: 50%;
-  margin-right: 50px;
+  width: 100%;
+  /* margin-right: 50px; */
   object-fit: contain;
   max-height: 80vh;
 }
@@ -54,11 +58,16 @@ body {
 
 .nasa-photo .date {
   margin-top: 0;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
+  font-size: .85em;
+  margin: 0 0 7px 0;
 }
 
 .nasa-photo .explanation{
-  color: #bbb;
+  color: rgb(0, 0, 0);
+  line-height: 20px;
+  font-size: 15.3px;
+  margin: 0 0 20px 0;
 }
 
 
@@ -96,4 +105,40 @@ body {
 .home-link:hover {
   border-radius: 5px;
   background: #e77171;
+}
+
+
+
+
+
+
+.context{
+  background-color: white;
+  padding: 17px;
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
+
+.context h1{
+  font-size: .85em;
+  font-weight: 900;
+  float: left;
+  margin: 0 20px 0 0;
+}
+
+.context p{
+  float: left;
+  font-weight: 550;
+}
+
+.counter{
+  margin: 0 16px 25px 0;
+  font-size: .85rem;
+  border: 1px solid #dcdcdc;
+  color:rgb(0, 0, 0);
+  background-color: #ffffff;
+  border-radius: 13%;
+  padding: 10px 8px;
+  font-weight: 500;
+  box-shadow: -1px 1px 1px 0px #a5a5a5;
 }

@@ -13,6 +13,7 @@ function App() {
       <Route component={Home} path="/" exact />
       <Route component={NasaPhoto} path="/nasaphoto" />
       
+      
     </div>
     </BrowserRouter>
   );
