@@ -123,10 +123,10 @@ export default function NasaPhoto() {
 
                 <div>
                 <button className="counter" onClick={() => handleLikeClick(title)}>
-                Like{likes}
+                Like {likes}
                 </button>
                 <button className="counter" onClick={() => handleDislikeClick(title)}>
-                Dislike{dislikes}
+                Dislike {dislikes}
                 </button>
             </div>
             </div>
