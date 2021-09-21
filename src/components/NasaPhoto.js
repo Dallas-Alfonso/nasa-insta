@@ -9,21 +9,15 @@ const apiKey = process.env.REACT_APP_NASA_KEY;
 export default function NasaPhoto() {
 
     const [title, setTitle] = useState("");
-    
-    // hooks for Likes and Dislikes
-    const [likes, setlikes] = useState(0);
-    const [dislikes, setDislikes] = useState(0);
-    // const [movieData, setMovieData] = useState ({}); //ADJUST THIS to pick up NASA DATA
-    // hooks for Likes and Dislikes
-
     const [photoData, setPhotoData] = useState({});
-
+        // hooks for Likes and Dislikes
+        const [likes, setlikes] = useState(0);
+        const [dislikes, setDislikes] = useState(0);
+        // hooks for Likes and Dislikes
     const [likesAndDislikes, setLikesAndDislikes] = useState({});
 
-    // JS for creating entires in databse, the like  and the dislike 
     useEffect(() => {
         if (!title) return null;
-        
         // retrieve likes/dislikes from Firebase and set data
 		// ELSE set a new entry in Firebase with movieID and set data
         const movieRef = firebase.database().ref (`${title}/`);
@@ -63,13 +57,10 @@ export default function NasaPhoto() {
     useEffect(() => {
         if (!likesAndDislikes) return null;
         const { dislikes: down, likes: up } = likesAndDislikes;
-        // console.log(likesAndDislikes)
         setDislikes(down);
         setlikes(up);
         
     }, [dislikes, likes, likesAndDislikes])
-
-    
 
     // called last to NOT call Hooks Conditionally
     if (!photoData) return <div />
@@ -85,8 +76,6 @@ export default function NasaPhoto() {
         updates[`${title}/dislikes`] = firebase.database.ServerValue.increment(1);
         firebase.database().ref().update(updates)
     }
-    // JS for creating entires in databse, the like  and the dislike 
-
 
     return (
         <>
