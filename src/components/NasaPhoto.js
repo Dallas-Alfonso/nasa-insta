@@ -16,7 +16,9 @@ export default function NasaPhoto() {
     // const [movieData, setMovieData] = useState ({}); //ADJUST THIS to pick up NASA DATA
     // hooks for Likes and Dislikes
 
-    const [photoData, setPhotoData] = useState(null);
+    const [photoData, setPhotoData] = useState({});
+
+    const [likesAndDislikes, setLikesAndDislikes] = useState({});
 
     // JS for creating entires in databse, the like  and the dislike 
     useEffect(() => {
@@ -29,7 +31,7 @@ export default function NasaPhoto() {
         movieRef.on("value", (data) => {
             
             if (data.val() !== null ) {
-                setPhotoData({
+                setLikesAndDislikes({
                     ...data.val(),
                 });
             } else {
@@ -54,18 +56,18 @@ export default function NasaPhoto() {
 
             setPhotoData(data);
             setTitle(data.title)
-            console.log(photoData)
+            
         }
     }, [title]);
 
     useEffect(() => {
-        if (!photoData) return null;
-        const { dislikes: down, likes: up } = photoData;
-        console.log(photoData)
+        if (!likesAndDislikes) return null;
+        const { dislikes: down, likes: up } = likesAndDislikes;
+        // console.log(likesAndDislikes)
         setDislikes(down);
         setlikes(up);
         
-    }, [dislikes, likes, photoData])
+    }, [dislikes, likes, likesAndDislikes])
 
     
 
