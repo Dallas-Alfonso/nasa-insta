@@ -12,7 +12,7 @@ Live App: https://nasa-insta.web.app/
 - Like and Dislike saves after page reload 
 - Firebase utilized for backend
 
-![Gif of Project] ( ./public/ezgif.com-gif-maker.gif)
+![Gif of Project](./src/components/ezgif.com-gif-maker.gif)
 
 
 ## Set Up And Run Project
