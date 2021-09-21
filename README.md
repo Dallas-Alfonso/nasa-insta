@@ -1,6 +1,7 @@
 # Nasa Insta
 
 Leave a Like or Dislike on Nasa's Astronomy Photo of the Day
+
 Original Api Source: https://api.nasa.gov/
 
 Live App: https://nasa-insta.web.app/
@@ -13,7 +14,7 @@ Live App: https://nasa-insta.web.app/
 
 - Firebase utilized for backend
 
-gif here
+![Gif of Project] (./src/images/ezgif.com-gif-maker.gif)
 
 ## Set Up And Run Project
 
