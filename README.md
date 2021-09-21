@@ -14,6 +14,7 @@ Live App: https://nasa-insta.web.app/
 
 ![Gif of Project] ( ./public/ezgif.com-gif-maker.gif)
 
+
 ## Set Up And Run Project
 
 1. Clone project locally
