@@ -11,9 +11,9 @@ Live App: https://nasa-insta.web.app/
 - Retrieve Data from Nasa "APOD" API
 - Like and Dislike saves after page reload 
 - Firebase utilized for backend
-- Responsive
+- Responsive / Mobile Friendly
 
-![Gif of Project](./src/images/ezgif.com-gif-maker.gif)
+![Gif of Project](./src/images/Nasa-App63844-PM.gif)
 
 
 ## Set Up And Run Project
@@ -32,5 +32,4 @@ Live App: https://nasa-insta.web.app/
 - Javascript
 - CSS
 - Nasa API "APOD"
-
 
